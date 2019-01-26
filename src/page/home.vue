@@ -26,6 +26,7 @@ export default {
 <style lang="less" scoped>
 .home {
     height: 100%;
+    position: relative;
     .bg {
         height: 100%;
         position: relative;
@@ -63,14 +64,20 @@ export default {
     }
     .content {
         position: absolute;
-        width: 100%;
-        left: 0;
+        width: 350px;
+        height: 422px;
+        left: 50%;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translate(-50%,-50%);
         opacity: 0;
         animation: content 1s linear forwards;
         img {
             width: 100%;
+        }
+    }
+    @media screen and (max-width: 321px) {
+        .content {
+            width: 320px;
         }
     }
     @keyframes content {

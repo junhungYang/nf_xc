@@ -11,9 +11,11 @@
        </header>
        <div class="slider-wrap">
            <slider :callback="getScroll">
-                <div class="slider-item" v-for="item in list">
-                    <p>{{item}}</p>
-                    <!-- <img class="slider-pic" :src="item.imageUrl" alt=""> -->
+                <div class="slider-item">
+                    <img class="slider-pic" src="../assets/img/poster1.jpg" alt="">
+                </div>
+                <div class="slider-item">
+                    <img class="slider-pic" src="../assets/img/poster2.jpg" alt="">
                 </div>
            </slider>
        </div>
@@ -21,7 +23,7 @@
         <div v-if="btnStatus === 1" class="lottery-btn" @click="goToRain">
             <p class="can">开始抽奖</p>
        </div>
-       <div v-if="btnStatus === 0" class="lottery-btn">
+       <div v-if="btnStatus === 0" class="lottery-btn" @click="console.log(11111)">
            <p class="cant">开始抽奖({{scrollIndex}})</p>
        </div>
        <rain v-if="rainStatus"></rain>
@@ -33,7 +35,7 @@ import rain from '@/components/rain.vue'
 export default {
     data() {
         return {
-            list: [1,2,3,4,5],
+            list: ['../assets/img/poster1.jpg','../assets/img/poster1.jpg'],
             scrollIndex: 0,
             btnStatus: 0,
             rainStatus: false
@@ -44,6 +46,7 @@ export default {
     },
     methods: {
         goToRain() {
+            console.log(12334)
             this.rainStatus = true
         },
         getScroll(scroll) {
@@ -62,7 +65,9 @@ export default {
 
 <style lang="less" scoped>
 .slider {
-    overflow: hidden;
+    // overflow: hidden;
+    height: 100%;
+    position: relative;
     .bg {
         width: 100%;
         height: 100vh;
@@ -78,7 +83,8 @@ export default {
         width: 100%;
         background: url('../assets/img/slider_top.png');
         height: 0.78rem;
-        background-size: cover;
+        background-size: 100%;
+        background-repeat: no-repeat;
         animation: headerAni .3s linear forwards;
         @keyframes headerAni {
             100% {
@@ -116,13 +122,27 @@ export default {
         }
     }
     .slider-wrap {
-        width: 3rem;
-        height: 4rem;
+        width: 300px;
+        height: 400px;
         position: absolute;
         top: 0.95rem;
         left: 50%;
         transform: translateX(-50%);
-        border:1px solid #fff;
+        box-shadow: 0 0 0.2rem rgba(0,0,0,0.8);
+        // border:1px solid #fff;
+        overflow: hidden;
+    }
+    @media screen and (min-width: 700px){
+        .slider-wrap {
+            width: 400px;
+            height: 533px;
+        }
+    }
+    @media screen and (max-width: 321px){
+        .slider-wrap {
+            width: 280px;
+            height: 373px;
+        }
     }
     .lottery-btn {
         position: absolute;

@@ -36,7 +36,8 @@ export default {
     },
     methods: {
         getOpendId() {
-            location.href = 'http://www.qq.com'
+            this.$router.push('/prizeCollect')
+            // location.href = 'http://www.qq.com'
         },
         rainDropInit() {
             let rainDrop = new Image()
