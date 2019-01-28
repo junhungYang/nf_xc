@@ -1,15 +1,15 @@
 <template>
     <div class="home">
         <div class="bg">
-            <img src="../assets/img/bg.jpg" class="behind">
-                <img src="../assets/img/top_cloud.png" class="top-cloud">
-            <img class="bottom-cloud" src="../assets/img/bottom_cloud.png">
+            <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/bg.jpg" class="behind">
+            <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/top_cloud.png" class="top-cloud">
+            <img class="bottom-cloud" src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/bottom_cloud.png">
         </div>
         <div class="content">
             <img :src="coverUrl" alt="" srcset="">
         </div>
         <div class="btn" @click="navToSlider">
-            <img src="../assets/img/home_btn.png" alt="">
+            <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/home_btn.png" alt="">
         </div>
     </div>
 </template>

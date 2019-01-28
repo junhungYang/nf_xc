@@ -3,12 +3,13 @@
         <div class="prizeResult">
             <div class="moneyPrize" v-if="res.giftType === 1">
                 <div class="img-wrap">
-                    <img src="../assets/img/moneyRes.png" @click="close">
+                    <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/moneyRes.png" @click="close">
                     <p>获得{{res.money}}元现金红包</p>
                 </div>
  
             </div>
             <div class="goodPrize" v-if="res.giftType === 2">
+                <div class="topCloud"></div>
                 <transition name="cont">
                     <div class="cont-wrap" v-show="contShowStatus">
                         <div class="cont">
@@ -28,17 +29,19 @@
                 </transition>
                 <transition name="cont">
                     <div class="input-info" v-show="inputShowStatus">
-                        <div class="input-wrap">s
+                        <div class="input-wrap">
                             <dl class="row">
                                 <dt>领奖人姓名</dt>
                                 <dd>
-                                    <input v-model="name" placeholder="请输入领奖人的真实姓名" type="text">
+                                    <input v-if="!infoUploadStatus" v-model="name"  placeholder="请输入领奖人的真实姓名" type="text">
+                                    <input v-else type="text" readonly v-model="name">
                                 </dd>
                             </dl>
                             <dl class="row">
                                 <dt>联系方式</dt>
                                 <dd>
-                                    <input v-model="phone" placeholder="请输入领奖人的联系方式" type="text">
+                                    <input v-if="!infoUploadStatus" v-model="phone" placeholder="请输入领奖人的联系方式" type="text">
+                                    <input v-else type="text" readonly v-model="phone">
                                 </dd>
                             </dl>
                             <dl class="row">
@@ -47,30 +50,39 @@
                                     {{place}}
                                 </dd>
                             </dl>
-                            <div class="warn">
+                            <dl class="row">
+                                <dt>详细地址</dt>
+                                <dd>
+                                    <input  v-if="!infoUploadStatus" v-model="placeDetail" placeholder="请输入领奖人的详细地址" type="text">
+                                    <input v-else type="text" readonly v-model="placeDetail">
+                                </dd>
+                            </dl>
+                            <div class="warn" v-if="!infoUploadStatus">
                                 <p>请认真填写和再次确定领奖人信息</p>
                                 <p>提交信息后无法更改</p>
                             </div>
                         </div>
-                        <i @click="close"></i>
+                        <i @click="closeInfoInput"></i>
                     </div>
                 </transition>
                 <footer>
-                    <p v-if="contShowStatus" @click="navToInputInfo">点击填写领取信息</p>
-                    <div v-if="inputShowStatus" class="inputBtn">
-                        <button class="confirm"></button>
-                        <button class="cancel"></button>
+                    <p v-if="contShowStatus" @click="navToInputInfo">{{infoUploadStatus ? '查看领取信息' : '点击填写领取信息'}}</p>
+                    <div v-if="inputShowStatus&&!infoUploadStatus" class="inputBtn">
+                        <button class="confirm" @click="sendInfo"></button>
+                        <button class="cancel" @click="closeInfoInput"></button>
                     </div>
                 </footer>
             </div>
             <show-modal v-if="modalShowStatus" :Store_showModal="modalInfo"></show-modal>
-            <!-- <place-picker></place-picker> -->
+            <place-picker :placeShowList="placeShowList"  v-if="placeShowList" @closePlaceScroll="closePlaceScroll" @getPlace="getPlace"></place-picker>
+            <div class="warnModal" v-show="warnStatus">{{warnText}}</div>
         </div>
     </transition>
 </template>
 <script>
 import placePicker from './placePicker/placePicker.vue'
 import showModal from './showModal.vue'
+import {Req_fillInfo} from '@/request/request'
 export default {
     props: {
         res:{
@@ -85,9 +97,13 @@ export default {
             name: '',
             phone: '',
             place: '点击选择活动区域',
+            placeDetail: '',
             placeShowList: false,
             modalShowStatus: false,
-            modalInfo: {}
+            modalInfo: {},
+                     warnText: '',
+            warnStatus: false,
+            infoUploadStatus: false
         }
     },
     mounted() {
@@ -97,10 +113,10 @@ export default {
     },
     methods: {
         close(type) {
-            if(type === 'good') {
+            if(type === 'good' && !this.infoUploadStatus) {
                 this.modalInfo = {
                     title: '温馨提示',
-                    content: '您还没填写奖品领取信息，确定退出吗',
+                    content: '您还没提交奖品领取信息，退出奖无法领取礼品',
                     successBtn: '退出',
                     cancelCB: () => this.modalShowStatus = false,
                     successCB: () => this.$emit('close')
@@ -117,7 +133,66 @@ export default {
             },350)
         },
         showPlaceList() {
-            this.placeShowList = true
+            if(!this.infoUploadStatus) {
+                this.placeShowList = true
+            }
+        },
+        getPlace(place) {
+            this.place = place
+            this.placeShowList = false
+        },
+        closePlaceScroll() {
+            this.placeShowList = false
+        },
+        closeInfoInput() {
+            this.inputShowStatus= false
+            setTimeout(() => this.contShowStatus = true,400)
+        },
+        sendInfo() {
+            setTimeout(() => {
+                if(!this.name) {
+                    this.warnText = '请输入领奖人姓名'
+                    this.warnStatus = true
+                    setTimeout(() => this.warnStatus = false , 1300)
+                    return
+                }
+                if(!this.phone) {
+                    this.warnText = '请输入领奖人手机号码'
+                    this.warnStatus = true
+                    setTimeout(() => this.warnStatus = false , 1300)
+                    return
+                }
+                if(this.place === '点击选择活动区域' || !this.place) {
+                    this.warnText = '请选择常活动区域'
+                    this.warnStatus = true
+                    setTimeout(() => this.warnStatus = false , 1300)
+                    return
+                }
+                if(!this.placeDetail) {
+                    this.warnText = '请输入详细地址'
+                    this.warnStatus = true
+                    setTimeout(() => this.warnStatus = false , 1300)
+                    return
+                }
+                Req_fillInfo({
+                    trueName: this.name,
+                    mobile: this.phone,
+                    address: this.place + this.placeDetail
+                }).then(res => {
+                    if(res.data.code === 0) {
+                        this.warnText = '提交成功'
+                        this.warnStatus = true
+                        this.infoUploadStatus = true
+                        this.inputShowStatus = false
+                        setTimeout(() => this.contShowStatus = true,400)
+                        setTimeout(() => this.warnStatus = false, 1300)
+                    }else if(res.data.code === -1) {
+                        this.warnStatus = true
+                        this.warnText = res.data.msg
+                        setTimeout(() => this.warnStatus = false, 1300)
+                    }
+                })
+            },250)
         }
     },
     components: {
@@ -171,16 +246,22 @@ export default {
     }
     .goodPrize {
         height: 100%;
-        background: url('../assets/img/slider_bg.jpg');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/slider_bg.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
+        .topCloud {
+            width: 100%;
+            height: 0.68rem;
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/slider_top.png');
+            background-size: cover;
+        }
         .cont-wrap {
             position: absolute;
             left: 50%;
             top: 0.25rem;
             bottom: 110px;
-            background: url('../assets/img/prize_bg.png');
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/prize_bg.png');
             width: 375px;
             background-size: 375px;
             background-repeat: no-repeat;
@@ -189,7 +270,7 @@ export default {
                 display: block;
                 width: 15px;
                 height: 15px;
-                background: url('../assets/img/close.png');
+                background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/close.png');
                 background-size: cover;
                 position: absolute;
                 left: 45px;
@@ -260,7 +341,7 @@ export default {
             left: 50%;
             top: 0.25rem;
             bottom: 110px;
-            background: url('../assets/img/prize_bg.png');
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/prize_bg.png');
             width: 375px;
             background-size: 375px;
             background-repeat: no-repeat;
@@ -270,7 +351,7 @@ export default {
                 display: block;
                 width: 15px;
                 height: 15px;
-                background: url('../assets/img/close.png');
+                background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/close.png');
                 background-size: cover;
                 position: absolute;
                 left: 45px;
@@ -341,7 +422,7 @@ export default {
             position: absolute;
             left: 50%;
             bottom: 0;
-            background: url('../assets/img/prize_bottom.png');
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/prize_bottom.png');
             width: 375px;
             height: 130px;
             background-size: cover;
@@ -367,13 +448,38 @@ export default {
                     height: 30px;
                 }
                 button:first-of-type {
-                    background: url('../assets/img/confirm_btn.png');
+                    background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/confirm_btn.png');
                     background-size: cover;
                 }
                 button:last-of-type {
-                    background: url('../assets/img/cancel_btn.png');
+                    background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/cancel_btn.png');
                      background-size: cover;
                 }
+            }
+        }
+    }
+     .warnModal {
+        position: absolute;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background: rgba(0,0,0,0.8);
+        font-size: 13px;
+        color: #fff;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        opacity: 0;
+        white-space:nowrap ;
+        animation: warnOpa .8s linear forwards;
+        @keyframes warnOpa {
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
             }
         }
     }

@@ -29,7 +29,7 @@ export default {
         },
         interval: {
             type: Number,
-            default: 2000
+            default: 1500
         },
         callback: {
             type: Function,
@@ -111,7 +111,7 @@ export default {
                 },
                 click: true
             })
-            this.slider.on('scrollEnd', () => {
+            this.slider.on('scrollEnd', (e) => {
                 //getCurrentPage可获得当前页的索引，该索引值用于对下标小圆点进行active样式的变换
                 let pageIndex = this.slider.getCurrentPage().pageX
                 this.currentPageIndex = pageIndex

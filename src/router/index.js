@@ -9,9 +9,9 @@ const prizeCollect = () => import("@/page/prizeCollect.vue");
 const prizeContent = () => import("@/page/prizeContent.vue");
 const writeInfo = () => import("@/page/writeInfo.vue");
 const company = () => import("@/page/company.vue");
-const inputInfo = () => import('@/page/inputInfo.vue')
 
 export default new Router({
+  // mode:'history',
   routes: [
     {
       path: "/home",
@@ -43,11 +43,7 @@ export default new Router({
       name: "company",
       component: company
     },
-    {
-      path: '/inputInfo',
-      name: 'inputInfo',
-      component: inputInfo
-    },
+
     {
       path: '*',
       redirect(to) {

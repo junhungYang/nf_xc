@@ -20,9 +20,6 @@
 <script>
 export default {
     props:['Store_showModal'],
-    created() {
-        console.log(this.Store_showModal)
-    },
     methods: {
         confirm() {
             this.Store_showModal.successCB()

@@ -9,10 +9,7 @@
             <button @click="navToCompany"></button>
         </div>
         <prize-result @close="closeRes" v-if="resultShowFlag" :res="res"></prize-result>
-        <transition  name="getted">
-            <div  class="getted" v-if="gettedPrize">您已领取过奖品了</div>
-        </transition>
-        
+        <div  class="getted" v-if="gettedPrize">您已领取过奖品了</div>
     </div>
 </template>
 <script>
@@ -60,7 +57,6 @@ export default {
                 }else if(res.data.code === -1) {
                     this.gettedPrize = true
                     setTimeout(() => this.gettedPrize = false,1250)
-                    console.log('你已领过奖了')
                 }
             })
         },
@@ -80,7 +76,7 @@ export default {
 <style lang="less" scoped>
 .prize-collect {
     height: 100vh;
-    background: url('../assets/img/collect_bg.jpg');
+    background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/collect_bg.jpg');
     background-size: cover;
     background-position: center center;
     position: relative;
@@ -90,7 +86,7 @@ export default {
         top: -1.5rem;
         width: 100%;
         height: 1.68rem;
-        background: url('../assets/img/collect_topCloud.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/collect_topCloud.png');
         background-size: cover;
         animation: topCloud .4s linear forwards;
         @keyframes topCloud {
@@ -107,7 +103,7 @@ export default {
         top: 45%;
         transform: translate(-50%,-50%);
         opacity: 0;
-        background: url('../assets/img/collect.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/collect.png');
         background-size: cover;
              animation: opa .4s linear forwards;
     }
@@ -123,7 +119,7 @@ export default {
         bottom: -1.09rem;
         width: 100%;
         height: 0.99rem;
-        background: url('../assets/img/collect_bottomCloud.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/collect_bottomCloud.png');
          background-size: cover;
         animation: bottomCloud .4s linear forwards;
         @keyframes bottomCloud {
@@ -151,11 +147,11 @@ export default {
             height: 0.38rem;
         }
         button:first-of-type {
-            background: url('../assets/img/getRes.png');
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/getRes.png');
             background-size: cover;
         }
         button:last-of-type {
-            background: url('../assets/img/companyIntroduct.png');
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/companyIntroduct.png');
             background-size: cover;
         }
     }

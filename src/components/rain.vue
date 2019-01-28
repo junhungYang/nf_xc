@@ -1,9 +1,8 @@
 <template>
     <div class="rain">
         <div class="rain-wrap" v-show="startStatus" ref="rainWrap">
-            <!-- <img class="rainDrop" src="/static/little_hongbao.png"> -->
-            <img ref="behind" class="behind" src="../assets/img/hongbao_bottom.png" alt="">
-            <img ref="front" class="front" src="../assets/img/hongbao_front.png" alt="">
+            <img ref="behind" class="behind" src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/hongbao_bottom.png" alt="">
+            <img ref="front" class="front" src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/hongbao_front.png" alt="">
         </div>
         <div class="rain-end" v-if="endStatus">
             <button @click="getOpendId"></button>
@@ -37,8 +36,7 @@ export default {
     methods: {
         getOpendId() {
             // oRMV0tyW0kIxje0WlJedNlcccO9Y
-            this.$router.push('/prizeCollect')
-            // location.href = 'http://nfxc.ydcycloud.com/nfxc/toOauth?h5Url=http://localhost:8080/#/prizeCollect'
+            location.href = 'http://nfxc.ydcycloud.com/nfxc/toOauth'
         },
         rainDropInit() {
             let rainDrop = new Image()
@@ -53,7 +51,7 @@ export default {
             rainDrop.onload = () => {
                 this.$refs.rainWrap.appendChild(rainDrop)            
             }
-            rainDrop.src = '../static/little_hongbao.png'
+            rainDrop.src = 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/little_hongbao.png'
             rainDrop.style.left =  parseInt(Math.random() * 100) + '%'
             rainDrop.style.transform = `translateX(-50%)`
         }
@@ -113,7 +111,7 @@ export default {
         width: 2.04rem;
         height: 2.27rem;
         opacity: 0.7;
-        background: url('../assets/img/rain_end.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/rain_end.png');
         background-size: cover;
         animation: rainEnd .7s linear forwards;
         @keyframes rainEnd {

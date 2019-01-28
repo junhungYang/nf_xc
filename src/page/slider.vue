@@ -1,21 +1,18 @@
 <template>
    <div class="slider">
        <div class="bg">
-           <img src="../assets/img/slider_bg.jpg" alt="" srcset="">
+           <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/slider_bg.jpg" alt="" srcset="">
        </div>
        <header>
            <div class="wrap">
-                   <img class="stick" src="../assets/img/stick.png" alt="">
-                    <img class="banner" src="../assets/img/banner.png" alt="">
+                   <img class="stick" src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/stick.png" alt="">
+                    <img class="banner" src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/banner.png" alt="">
            </div>
        </header>
        <div class="slider-wrap">
            <slider :callback="getScroll">
-                <div class="slider-item">
-                    <img class="slider-pic" src="../assets/img/poster1.jpg" alt="">
-                </div>
-                <div class="slider-item">
-                    <img class="slider-pic" src="../assets/img/poster2.jpg" alt="">
+                <div class="slider-item" v-for="item in list">
+                    <img class="slider-pic" :src="item" alt="">
                 </div>
            </slider>
        </div>
@@ -23,7 +20,7 @@
         <div v-if="btnStatus === 1" class="lottery-btn" @click="goToRain">
             <p class="can">开始抽奖</p>
        </div>
-       <div v-if="btnStatus === 0" class="lottery-btn" @click="console.log(11111)">
+       <div v-if="btnStatus === 0" class="lottery-btn">
            <p class="cant">开始抽奖({{scrollIndex}})</p>
        </div>
        <rain v-if="rainStatus"></rain>
@@ -35,7 +32,7 @@ import rain from '@/components/rain.vue'
 export default {
     data() {
         return {
-            list: ['../assets/img/poster1.jpg','../assets/img/poster1.jpg'],
+            list: ['https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/poster1.jpg','https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/poster1.jpg','https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/poster1.jpg'],
             scrollIndex: 0,
             btnStatus: 0,
             rainStatus: false
@@ -43,17 +40,25 @@ export default {
     },
     created() {
         this.scrollIndex = this.list.length
+        this.timer = setInterval(() => {
+            if(this.scrollIndex > 0) {
+                this.scrollIndex --
+                if(this.scrollIndex === 0) {
+                    clearInterval(this.timer)
+                    this.btnStatus = 1
+                }
+            }
+        },1550)
     },
     methods: {
         goToRain() {
-            console.log(12334)
             this.rainStatus = true
         },
         getScroll(scroll) {
-            this.scrollIndex = this.list.length - scroll.currentPage.pageX + 1
-            if((this.list.length === scroll.currentPage.pageX) && this.btnStatus === 0) {
-                this.btnStatus = 1
-            }
+            // this.scrollIndex = this.list.length - scroll.currentPage.pageX + 1
+            // if((this.list.length === scroll.currentPage.pageX) && this.btnStatus === 0) {
+            //     this.btnStatus = 1
+            // }
         }
     },
     components: {
@@ -81,7 +86,7 @@ export default {
         left: 0;
         top: -0.78rem;
         width: 100%;
-        background: url('../assets/img/slider_top.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/slider_top.png');
         height: 0.78rem;
         background-size: 100%;
         background-repeat: no-repeat;
@@ -150,7 +155,7 @@ export default {
         left: 50%;
         bottom: 0.44rem;
         transform: translateX(-50%);
-        background: url('../assets/img/lotteryWait_btn.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/lotteryWait_btn.png');
         height: 0.38rem;
         background-size: cover;
         p {
@@ -173,7 +178,7 @@ export default {
         width:100%;
         left: 0;
         bottom: -0.74rem;
-        background: url('../assets/img/slider_bottom.png');
+        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/slider_bottom.png');
         background-size: cover;
         height: 1.05rem;
         animation: footerAni .3s linear forwards;
