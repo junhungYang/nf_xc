@@ -36,8 +36,9 @@ export default {
     },
     methods: {
         getOpendId() {
+            // oRMV0tyW0kIxje0WlJedNlcccO9Y
             this.$router.push('/prizeCollect')
-            // location.href = 'http://www.qq.com'
+            // location.href = 'http://nfxc.ydcycloud.com/nfxc/toOauth?h5Url=http://localhost:8080/#/prizeCollect'
         },
         rainDropInit() {
             let rainDrop = new Image()

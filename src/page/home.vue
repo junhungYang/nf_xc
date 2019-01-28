@@ -6,7 +6,7 @@
             <img class="bottom-cloud" src="../assets/img/bottom_cloud.png">
         </div>
         <div class="content">
-            <img src="../assets/img/yuan.png" alt="" srcset="">
+            <img :src="coverUrl" alt="" srcset="">
         </div>
         <div class="btn" @click="navToSlider">
             <img src="../assets/img/home_btn.png" alt="">
@@ -14,7 +14,21 @@
     </div>
 </template>
 <script>
+import {Req_getIndexCover} from '@/request/request'
 export default {
+    data() {
+        return {
+            coverUrl: ''
+        }
+    },
+    created() {
+        Req_getIndexCover().then(res => {
+            if(res.data.code === 0) {
+                this.coverUrl = res.data.data
+                console.log(this.coverUrl)
+            } 
+        })
+    },
     methods: {
         navToSlider() {
             this.$router.push('/slider')
@@ -70,7 +84,7 @@ export default {
         top: 50%;
         transform: translate(-50%,-50%);
         opacity: 0;
-        animation: content 1s linear forwards;
+        animation: content 1s linear .4s forwards;
         img {
             width: 100%;
         }

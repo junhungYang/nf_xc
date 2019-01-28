@@ -8,33 +8,67 @@
             <button @click="getPrize"></button>
             <button @click="navToCompany"></button>
         </div>
-        <prize-result v-show="resultShowFlag" :res="res"></prize-result>
+        <prize-result @close="closeRes" v-if="resultShowFlag" :res="res"></prize-result>
+        <transition  name="getted">
+            <div  class="getted" v-if="gettedPrize">您已领取过奖品了</div>
+        </transition>
+        
     </div>
 </template>
 <script>
 import prizeResult from '@/components/prizeResult.vue'
+import {Req_receiveGift} from '@/request/request'
 export default {
     data() {
         return {
             getPrizeFlag: true,
             resultShowFlag: false,
-            res: -1
+            res: null,
+            gettedPrize: false
+        }
+    },
+    beforeRouteEnter (to, from, next) {
+        if(document.cookie.includes(';')) {
+  
+            let arr = document.cookie.split('; ')
+            let flag = false
+            arr.forEach(item => {
+                if(item.split('=')[0] === 'openId' && item.split('=')[1]) {
+                    window.USER_OPENID = item.split('=')[1]
+                    flag = true
+                }
+            })
+            flag ? next() : next(false)
+        }else {
+            let arr = document.cookie.split('=')
+            if(arr[0] !== 'openId'|| !arr[1]) {
+                next(false)
+            }else {
+                window.USER_OPENID = arr[1]
+                next()
+            }
         }
     },
     methods: {
         getPrize() {
-            // 到时用户是否可以抽奖由后台返回的结果进行判断，每个用户只可抽一次
-            if(this.getPrizeFlag) {
-                this.getPrizeFlag = false;
-                this.resultShowFlag = true;
-                // 发送请求获取结果
-                this.res = Math.random()
-            }else {
-                console('你已经抽过奖')
-            }
+            Req_receiveGift({
+                openId: window.USER_OPENID
+            }).then(res => {
+                if(res.data.code === 0) {
+                    this.resultShowFlag = true
+                    this.res = res.data.data
+                }else if(res.data.code === -1) {
+                    this.gettedPrize = true
+                    setTimeout(() => this.gettedPrize = false,1250)
+                    console.log('你已领过奖了')
+                }
+            })
         },
         navToCompany() {
             this.$router.push('/company')
+        },
+        closeRes() {
+            this.resultShowFlag = false
         }
     },
     components: {
@@ -125,6 +159,31 @@ export default {
             background-size: cover;
         }
     }
+    .getted {
+        position: absolute;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background: rgba(0,0,0,0.8);
+        font-size: 13px;
+        color: #fff;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        opacity: 0;
+        animation: gettedOpa 1.2s linear forwards;
+        @keyframes gettedOpa {
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    }
+
     @keyframes opa {
         100% {
             opacity: 1;
