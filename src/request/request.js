@@ -1,8 +1,8 @@
 
 import axios from 'axios'
 import qs from 'qs'
-
-const GlobalUrl = '/api'
+// 'http://nfxc.ydcycloud.com'
+const GlobalUrl = (process.env.NODE_ENV === 'development' ? '/api' : 'http://nfxc.ydcycloud.com')
 
 const Req_getIndexCover = function() {
     return axios.get(`${GlobalUrl}/nfxc/getIndexCover`)   

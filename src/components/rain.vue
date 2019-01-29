@@ -36,6 +36,7 @@ export default {
     methods: {
         getOpendId() {
             // oRMV0tyW0kIxje0WlJedNlcccO9Y
+            // this.$router.push('/prizeCollect')
             location.href = 'http://nfxc.ydcycloud.com/nfxc/toOauth'
         },
         rainDropInit() {

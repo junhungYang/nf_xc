@@ -6,8 +6,6 @@ Vue.use(Router);
 const home = () => import("@/page/home.vue");
 const slider = () => import("@/page/slider.vue");
 const prizeCollect = () => import("@/page/prizeCollect.vue");
-const prizeContent = () => import("@/page/prizeContent.vue");
-const writeInfo = () => import("@/page/writeInfo.vue");
 const company = () => import("@/page/company.vue");
 
 export default new Router({
@@ -27,16 +25,6 @@ export default new Router({
       path: "/prizeCollect",
       name: "prizeCollect",
       component: prizeCollect
-    },
-    {
-      path: "/prizeContent",
-      name: "prizeContent",
-      component: prizeContent
-    },
-    {
-      path: "/writeInfo",
-      name: "writeInfo",
-      component: writeInfo
     },
     {
       path: "/company",

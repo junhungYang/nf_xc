@@ -7,9 +7,9 @@
       <slot></slot>
     </div>
     <!-- 下标小圆点 -->
-    <div class="dots">
+    <!-- <div class="dots">
       <span class="dot" v-for="(item,index) in dots" :class="{active:currentPageIndex == index}"></span>
-    </div>
+    </div> -->
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -167,6 +167,7 @@ export default {
 .slider-item img {
   display: block;
   width: 100%;
+  height: 100%;
 }
 .dots {
   position: absolute;

@@ -1,7 +1,17 @@
 <template>
     <div class="prize-collect">
         <header></header>
-        <div class="collect"></div>
+        <div class="collect">
+            <ul>
+                <img :src="item.src" v-for="item in HB_btn_F_List" @click="getCompanyActive(item.value)"></img>
+            </ul>
+            <ul>
+                <img :src="item.src" v-for="item in HB_btn_S_List"  @click="getCompanyActive(item.value)"></img>
+            </ul>
+            <ul>
+                <img :src="item.src" v-for="item in HB_btn_T_List"  @click="getCompanyActive(item.value)"></img>
+            </ul>
+        </div>
         <footer>
         </footer>
         <div class="btn-group">
@@ -10,19 +20,73 @@
         </div>
         <prize-result @close="closeRes" v-if="resultShowFlag" :res="res"></prize-result>
         <div  class="getted" v-if="gettedPrize">您已领取过奖品了</div>
+        <div v-show="companyDetailStatus" class="comDetail">
+            <img v-for="item in activecCompanyList" :src="item" alt="">
+            <div class="closeCompany" @click="closeCompany"></div>
+        </div>
     </div>
 </template>
 <script>
 import prizeResult from '@/components/prizeResult.vue'
 import {Req_receiveGift} from '@/request/request'
+import companyImgData from '@/util/companyUtil'
 export default {
     data() {
         return {
             getPrizeFlag: true,
             resultShowFlag: false,
             res: null,
-            gettedPrize: false
+            gettedPrize: false,
+            HB_btn_F_List: [
+                {
+                    value: 'ShiDai',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_ShiDai_btn.png'
+                },
+                {
+                    value: 'LianBang',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_LianBang_btn.png',
+                },
+                {
+                    value: 'YuanHang',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_YuanHang_btn.png',
+                },
+            ],
+            HB_btn_S_List: [
+                {
+                    value: 'WanKe',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_WanKe_btn.png',
+
+                },
+                {
+                    value: 'ShiShan',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_ShiShan_btn.png',
+                },
+                {
+                    value: 'HongYu',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_HongYu_btn.png',
+                },
+            ],
+            HB_btn_T_List: [
+                {
+                    value: 'LingNan',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_LingNan_btn.png',
+                },  
+                {
+                    value: 'GongJia',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_GongJia_btn.png',
+                },
+                {
+                    value: 'NanZhuang',
+                    src: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/HB_NanZhuang_btn.png',
+                }
+            ],
+            companyImgData: companyImgData,
+            companyDetailStatus: false,
+            activecCompanyList: []
         }
+    },
+    created() {
+         window.JSSDK()
     },
     beforeRouteEnter (to, from, next) {
         if(document.cookie.includes(';')) {
@@ -47,10 +111,25 @@ export default {
         }
     },
     methods: {
+        closeCompany() {
+            this.companyDetailStatus = false
+        },
+        getCompanyActive(type) {
+            this.companyDetailStatus = true
+            this.activecCompanyList = this.companyImgData[type].list
+        },
         getPrize() {
             Req_receiveGift({
-                openId: window.USER_OPENID
+                openId: window.USER_OPENIDS
             }).then(res => {
+                // this.resultShowFlag = true
+                // this.res =  {
+                //         "giftType":3,
+                //         "money":12.1,
+                //         "coverUrl":"",
+                //         "sponsor":"碧桂园",
+                //         "giftName":"电饭煲"
+                //     }
                 if(res.data.code === 0) {
                     this.resultShowFlag = true
                     this.res = res.data.data
@@ -96,21 +175,35 @@ export default {
         }
     }
     .collect {
-        height: 383px;
-        width: 283px;
+        width: 100%;
         position: absolute;
         left: 50%;
-        top: 45%;
+        top: 50%;
         transform: translate(-50%,-50%);
         opacity: 0;
-        background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/collect.png');
-        background-size: cover;
-             animation: opa .4s linear forwards;
+        animation: opa .4s linear forwards;
+        ul {
+            text-align: center;
+            font-size: 0;
+            img {
+                width: 0.88rem;
+                height: 1.16rem;
+            }
+        }
     }
     @media screen and (min-width: 700px) {
         .collect {
-                    height: 540px;
-         width: 400px;
+            height: 540px;
+            width: 400px;
+            ul {
+                text-align: center;
+                font-size: 0;
+                white-space: nowrap;
+                img {
+                    width: 130px;
+                    height: 171px;
+                }
+            }
         }
     }
     footer {
@@ -179,7 +272,29 @@ export default {
             }
         }
     }
-
+    .comDetail {
+         background: #fff;
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    font-size: 0;
+        img {
+            width: 100%;
+        }
+        .closeCompany {
+            width: 0.29rem;
+            height: 0.38rem;
+            background: url("https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/backToCollect.png");
+            background-size: cover;
+            position: fixed;
+            right: 0.20rem;
+            bottom: 0.56rem;
+            z-index: 5;
+        }
+    }
     @keyframes opa {
         100% {
             opacity: 1;
