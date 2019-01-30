@@ -14,6 +14,16 @@
             <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/home_btn.png" alt="">
         </div>
         <div class="mask" @click="navToSlider"></div>
+        <div class="ruleBtn" @click="ruleStatusManage(true)">
+            <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/ruleBtn.png" alt="">
+        </div>
+        <transition name="rule">
+            <div class="ruleIntroduce" v-show="ruleStatus">
+                <div class="rule-bg">
+                    <div class="close" @click="ruleStatusManage(false)"></div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 <script>
@@ -21,7 +31,8 @@ import {Req_getIndexCover} from '@/request/request'
 export default {
     data() {
         return {
-            coverUrl: ''
+            coverUrl: '',
+            ruleStatus: false
         }
     },
     created() {
@@ -38,6 +49,9 @@ export default {
     methods: {
         navToSlider() {
             this.$router.push('/slider')
+        },
+        ruleStatusManage(type) {
+            this.ruleStatus = type
         }
     }
 }
@@ -206,9 +220,57 @@ export default {
         width: 100%;
         height: 100%;
         position: absolute;
-        z-index: 8;
         top: 0;
         left: 0;
+    }
+    .ruleBtn {
+        width: 1rem;
+        height: 0.7rem;
+        // border: 1px solid red;
+        position: absolute;
+        right: 0;
+        top: 0;
+        img {
+            margin: 0 0.15rem;
+            margin-top: 0.1rem;
+            width: 0.7rem;
+            height: 0.39rem;
+        }
+    }
+    .ruleIntroduce {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        .rule-bg {
+            width: 287px;
+            height: 441px;
+            position: absolute;
+            left: 51%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/rule_bg.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            .close {
+                width: 30px;
+                height: 30px;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+    }
+    .rule-enter,.rule-leave-to {
+        opacity: 0;
+    }
+    .rule-enter-to,.rule-leave {
+        opacity: 1;
+    }
+    .rule-enter-active,.rule-leave-active {
+        transition: all .4s linear;
     }
 }
 
