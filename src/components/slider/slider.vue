@@ -29,7 +29,7 @@ export default {
         },
         interval: {
             type: Number,
-            default: 1500
+            default: 2000
         },
         callback: {
             type: Function,

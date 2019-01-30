@@ -1,6 +1,7 @@
 <template>
   <div id="app">
       <router-view/>
+      <audio src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/mp3/music.mp3" loop autoplay ></audio>
   </div>
 </template>
 

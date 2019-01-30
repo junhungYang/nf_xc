@@ -199,7 +199,7 @@ export default {
           setTimeout(() => (this.warnStatus = false), 1300);
           return;
         }
-        if (!this.phone) {
+        if (!this.phone || Object.is(Number(this.phone),NaN)) {
           this.warnText = "请输入领奖人手机号码";
           this.warnStatus = true;
           setTimeout(() => (this.warnStatus = false), 1300);

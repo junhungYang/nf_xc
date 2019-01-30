@@ -178,16 +178,17 @@ export default {
         width: 100%;
         position: absolute;
         left: 50%;
-        top: 50%;
+        top: 43%;
         transform: translate(-50%,-50%);
         opacity: 0;
         animation: opa .4s linear forwards;
+        overflow-y: scroll;
         ul {
             text-align: center;
             font-size: 0;
             img {
-                width: 0.88rem;
-                height: 1.16rem;
+                width: 0.93rem;
+                height: 1.26rem;
             }
         }
     }
@@ -236,16 +237,18 @@ export default {
         justify-content: space-around;
         button {
             margin: 0 0.20rem;
-            width: 1.30rem;
-            height: 0.38rem;
+            width: 1.10rem;
+            height: 0.32rem;
         }
         button:first-of-type {
             background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/getRes.png');
             background-size: cover;
+            background-repeat: no-repeat;
         }
         button:last-of-type {
             background: url('https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/companyIntroduct.png');
             background-size: cover;
+                background-repeat: no-repeat;
         }
     }
     .getted {

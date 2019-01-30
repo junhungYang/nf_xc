@@ -98,7 +98,7 @@ export default {
             width: 100%;
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: 5px;
             transform: translateX(-100%);
             animation: whiteTextAni .8s ease-in .5s forwards;
             @keyframes whiteTextAni {
@@ -142,7 +142,7 @@ export default {
             width: 3.5rem;
             height: 4.22rem;
             left: 50%;
-            top: 37%;
+            top: 42%;
             transform: translate(-50%,-50%);
             opacity: 0;
             animation: content .5s linear .4s forwards;

@@ -22,13 +22,13 @@ window.JSSDK = function() {
     })
     wx.ready(() => {
       wx.onMenuShareAppMessage({
-        title: '恭贺新春！',
-        desc: '南方日报、南方网、南方+携手佛山知名校企给全国人民拜年',
+        title: '恭贺新春，佛山知名企业向全国人民拜年！',
+        desc: '一大波现金红包、精美礼物等你来拿。',
         link: 'http://nfxc.ydcycloud.com/dist/index.html',
         imgUrl: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/shareLogo.jpg'
       })
       wx.onMenuShareTimeline({
-        title: '恭贺新春！南方日报、南方网、南方+携手佛山知名校企给全国人民拜年',
+        title: '恭贺新春，佛山知名企业向全国人民拜年！一大波现金红包、精美礼物等你来拿。',
         link: 'http://nfxc.ydcycloud.com/dist/index.html',
         imgUrl: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/shareLogo.jpg'
       })
