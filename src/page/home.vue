@@ -14,7 +14,7 @@
             <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/home_btn.png" alt="">
         </div>
         <div class="mask" @click="navToSlider"></div>
-        <div class="ruleBtn" @click="ruleStatusManage(true)">
+        <!-- <div class="ruleBtn" @click="ruleStatusManage(true)">
             <img src="https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/ruleBtn.png" alt="">
         </div>
         <transition name="rule">
@@ -23,7 +23,7 @@
                     <div class="close" @click="ruleStatusManage(false)"></div>
                 </div>
             </div>
-        </transition>
+        </transition> -->
     </div>
 </template>
 <script>
@@ -165,12 +165,12 @@ export default {
             }
         }
     }
-    @media screen and (min-height: 950px) and (min-width: 740px) {
+    @media screen and (min-height: 870px) and (min-width: 700px) {
         // ipad类
         .content {
             position: absolute;
-            width: 3.5rem;
-            height: 4.22rem;
+            width: 440px;
+            height: 530px;
             left: 50%;
             top: 37%;
             transform: translate(-50%,-50%);

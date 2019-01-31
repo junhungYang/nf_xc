@@ -5,9 +5,6 @@ import './assets/css/reset.css'
 import {Req_jssdk} from './request/request'
 Vue.config.productionTip = false
 
-// var media = new Audio()
-// media.src = 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/newMsg.mp3'
-// media.load()
 
 window.JSSDK = function() {
   Req_jssdk({
@@ -22,13 +19,13 @@ window.JSSDK = function() {
     })
     wx.ready(() => {
       wx.onMenuShareAppMessage({
-        title: '恭贺新春，佛山知名企业向全国人民拜年！',
+        title: '恭贺新春，佛山知名品牌向全国人民拜年！',
         desc: '一大波现金红包、精美礼物等你来拿。',
         link: 'http://nfxc.ydcycloud.com/dist/index.html',
         imgUrl: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/shareLogo.jpg'
       })
       wx.onMenuShareTimeline({
-        title: '恭贺新春，佛山知名企业向全国人民拜年！一大波现金红包、精美礼物等你来拿。',
+        title: '恭贺新春，佛山知名品牌向全国人民拜年！一大波现金红包、精美礼物等你来拿。',
         link: 'http://nfxc.ydcycloud.com/dist/index.html',
         imgUrl: 'https://yunduanchuangyi.oss-cn-shenzhen.aliyuncs.com/nfxc/img/shareLogo.jpg'
       })
@@ -36,10 +33,11 @@ window.JSSDK = function() {
   })
 }
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   render: h => h(App)
 })
+
+

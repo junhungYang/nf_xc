@@ -22,7 +22,7 @@ export default {
         this.$refs.front.style.width = window.innerWidth + 'px'
         this.timer1 = setInterval(() => {
             this.rainDropInit()
-        }, 400)
+        }, 300)
         setTimeout(() => {
             clearInterval(this.timer1)
             setTimeout(() => {
@@ -145,7 +145,7 @@ export default {
             z-index: -1;
             top: -0.8rem;
             opacity: 1;
-            animation: rainDown 4.5s linear forwards;
+            animation: rainDown 3.6s linear forwards;
              @keyframes rainDown {
                  70% {
                      width: 0.6rem;
